@@ -38,7 +38,7 @@ Stable = list(
     Quantiles = function(model, t, probabilities = seq(from = 0.9, to = 0.1, by = -0.1)) {
         tail = model$tail[1];
         skew = model$skew[1];
-        disp = model$disp[1] * sqrt(t);
+        disp = model$disp[1] * (t ^ (1 / tail));
         loc = model$loc[1] * t;
         log.quantiles = qstable(probabilities, tail = tail, skew = skew, disp = disp, loc = loc);
         quantiles = exp(log.quantiles) - 1;
@@ -52,7 +52,7 @@ Stable = list(
     VaR = function(model, t, p) {
         tail = model$tail[1];
         skew = model$skew[1];
-        disp = model$disp[1] * sqrt(t);
+        disp = model$disp[1] * (t ^ ( 1 / tail));
         loc = model$loc[1] * t;
         return(exp(qstable(p, tail = tail, skew = skew, disp = disp, loc = loc)) - 1);
     },
